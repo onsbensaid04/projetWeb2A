@@ -1,15 +1,20 @@
-# ✅ Tableau des tâches du projet
 
-## 📝 TO DO
-- [ ] Frontend de la page principale
-- [ ] Créer le système de connexion des utilisateurs
-- [ ] Ajouter des fonctionnalités de publication et de commentaire dans le forum
-- [ ] Styliser les pages avec du CSS
+✅ **Tableau des tâches du projet**
 
-## 🚧 DOING
-- [ ] Frontend de la partie discussion (page forum)
+📝 **TO DO**  
 
-## ✅ DONE
-- [x] Création des entités dans la base de données
-- [x] Dépôt initialisé
-- [x] Fichiers du projet téléchargés
+🚧 **DOING**  
+**Intégration avec le reste des gestions**
+
+✅ **DONE**  
+- Création des entités dans la base de données  
+- Dépôt initialisé  
+- Fichiers du projet téléchargés  
+- Frontend de la page principale  
+- Ajouter des fonctionnalités de publication et de commentaire dans le forum  
+- Styliser les pages avec du CSS  
+- Frontend de la partie discussion (page forum)  
+- Métier : simples  
+- Métier : avancée  
+  - API modération  
+  - API sécurité
