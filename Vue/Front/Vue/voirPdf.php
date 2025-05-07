@@ -92,20 +92,12 @@ https://templatemo.com/tm-548-training-studio
                             <li class="scroll-to-section">
                                 <a href="index.html" class="active" style="color: rgba(0,123,255,.25) ;">Home</a>
                             </li>
+                            
                             <li class="scroll-to-section">
-                                <a href="classes.html" style="color: rgba(0,123,255,.25);">Classes</a>
+                                <a href="pdf.php" style="color: rgba(0,123,255,.25);">Cours</a>
                             </li>
-                            <li class="scroll-to-section">
-                                <a href="schedules.html" style="color: rgba(0,123,255,.25);">Schedules</a>
-                            </li>
-                            <li class="has-sub">
-                                <a href="javascript:void(0)">Cours</a>
-                                <ul class="sub-menu">
-                                    <li><a href="pdf.php">Videos</a></li>
-                                    <li><a href="pdf.php">PDF</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="Test.html">Test</a></li>
+                           
+                          
 
                             <li class="scroll-to-section">
                                 <a href="#contact-us" style="color: rgba(0,123,255,.25);">Contact</a>
@@ -206,12 +198,12 @@ https://templatemo.com/tm-548-training-studio
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($video['titre']) ?></h5>
                             <p class="card-text"><?= htmlspecialchars($video['description']) ?></p>
-                            <p><strong>Durée:</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
-                            <p><strong>Date ajoutée:</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
+                            <p><strong>Duration:</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
+                            <p><strong>Date_added:</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
 
                             <!-- Bouton pour voir la vidéo -->
                             <a href="voir_video.php?id_video=<?= htmlspecialchars($video['id_video']) ?>" class="btn btn-primary mt-3">
-                                Voir la vidéo
+                            Watch the video
                             </a>
                         </div>
                     </div>
@@ -222,7 +214,7 @@ https://templatemo.com/tm-548-training-studio
         <!-- Bouton retour -->
         <div class="row mt-4">
             <div class="col-lg-12 text-center">
-                <a href="pdf.php" class="btn btn-outline-primary">⬅ Retour à la liste des PDF</a>
+                <a href="pdf.php" class="btn btn-outline-primary">⬅ Back to the PDF list</a>
             </div>
         </div>
     </div>

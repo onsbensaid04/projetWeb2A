@@ -100,20 +100,11 @@ https://templatemo.com/tm-548-training-studio
                             <li class="scroll-to-section">
                                 <a href="index.html" class="active" style="color: rgba(0,123,255,.25) ;">Home</a>
                             </li>
+                          
                             <li class="scroll-to-section">
-                                <a href="classes.html" style="color: rgba(0,123,255,.25);">Classes</a>
+                                <a href="pdf.php" style="color: rgba(0,123,255,.25);">Cours</a>
                             </li>
-                            <li class="scroll-to-section">
-                                <a href="schedules.html" style="color: rgba(0,123,255,.25);">Schedules</a>
-                            </li>
-                            <li class="has-sub">
-                                <a href="javascript:void(0)">Cours</a>
-                                <ul class="sub-menu">
-                                    <li><a href="pdf.php">Videos</a></li>
-                                    <li><a href="pdf.php">PDF</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="Test.html">Test</a></li>
+                           
 
                             <li class="scroll-to-section">
                                 <a href="#contact-us" style="color: rgba(0,123,255,.25);">Contact</a>
@@ -151,10 +142,10 @@ https://templatemo.com/tm-548-training-studio
         <?php endif; ?>
 
         <p><strong>Description :</strong> <?= htmlspecialchars($video['description']) ?></p>
-        <p><strong>Durée :</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
-        <p><strong>Date_ajout :</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
+        <p><strong>Duration :</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
+        <p><strong>Date_added :</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
 
-        <h5 class="mt-5">Donnez votre avis :</h5>
+        <h5 class="mt-5">Give your feedback ou Provide your feedback :</h5>
         <!-- Affichage des anciens commentaires de l'utilisateur -->
 <!-- Affichage des anciens commentaires de l'utilisateur -->
 <!-- Formulaire de note et commentaire -->
@@ -163,7 +154,7 @@ https://templatemo.com/tm-548-training-studio
 
     <!-- 1. Saisie des étoiles -->
     <div class="mb-3">
-        <label class="form-label">Votre note :</label><br>
+        <label class="form-label">Your grade:</label><br>
         <div class="star-rating">
             <?php for ($i = 5; $i >= 1; $i--): ?>
                 <input type="radio" id="star<?= $i ?>" name="note" value="<?= $i ?>" <?= ($i == $lastNote) ? 'checked' : '' ?>>
@@ -183,7 +174,7 @@ https://templatemo.com/tm-548-training-studio
     ?>
 
     <?php if ($commentaires): ?>
-        <h4 class="mb-3">Vos commentaires précédents</h4>
+        <h4 class="mb-3">Your previous comments </h4>
         <div class="list-group mb-4">
             <?php foreach ($commentaires as $com): ?>
                 <div class="list-group-item p-4 rounded shadow-sm mb-3">
@@ -199,7 +190,7 @@ https://templatemo.com/tm-548-training-studio
                         <?php if (!empty($com['commentaire'])): ?>
                             <p class="mb-0"><?= nl2br(htmlspecialchars($com['commentaire'])) ?></p>
                         <?php else: ?>
-                            <p class="text-muted fst-italic mb-0">Aucun commentaire ajouté.</p>
+                            <p class="text-muted fst-italic mb-0">No comment added. </p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -209,11 +200,12 @@ https://templatemo.com/tm-548-training-studio
 
     <!-- 3. Saisie du commentaire (après les anciens commentaires) -->
     <div class="mb-3">
-        <label for="commentaire" class="form-label">Ajouter un commentaire (optionnel)</label>
+        <label for="commentaire" class="form-label">Add a comment (optional)"</label>
         <textarea class="form-control" name="commentaire" rows="3"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" class="btn btn-primary">Submit
+    </button>
 </form>
 
 
@@ -223,7 +215,7 @@ https://templatemo.com/tm-548-training-studio
 
 
 
-        <a href="pdf.php" class="btn btn-secondary mt-3">← Retour</a>
+        <a href="pdf.php" class="btn btn-secondary mt-3">← Back</a>
     </div>
 </body>
 <footer>

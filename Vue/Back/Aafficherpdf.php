@@ -166,10 +166,8 @@ $pdfs = $stmt->fetchAll();
 			<div class="user-info-dropdown">
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-						<span class="user-icon">
-							<img src="vendors/images/photo1.jpg" alt="">
-						</span>
-						<span class="user-name">Ross C. Lopez</span>
+						
+						<span class="user-name">StartupAcademy</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
@@ -179,9 +177,7 @@ $pdfs = $stmt->fetchAll();
 					</div>
 				</div>
 			</div>
-			<div class="github-link">
-				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg" alt=""></a>
-			</div>
+			
 		</div>
 	</div>
 
@@ -294,11 +290,13 @@ $pdfs = $stmt->fetchAll();
 					
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-library"></span><span class="mtext">Tables</span>
+							<span class="micon dw dw-library"></span><span class="mtext">Exams</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="basic-table.html">Basic Tables</a></li>
-							<li><a href="datatable.html">DataTables</a></li>
+							<li><a href="ajouterQuiz.php">addquiz</a></li>
+							<li><a href="afficherQuiz.php">Quiz List</a></li>
+							<li><a href="ajouterTest.php">Add Test</a></li>
+						<li><a href="afficherTest.php">Test List</a></li>
 						</ul>
 					</li>
 					
@@ -331,7 +329,6 @@ $pdfs = $stmt->fetchAll();
 				<div class="card-box mb-30">
 					<div class="pd-20">
 						<h4 class="text-blue h4">Liste</h4>
-						<p class="mb-0">You can find more options <a class="text-primary" href="https://datatables.net/" target="_blank">Click Here</a></p>
 					</div>
 					<div class="pb-20">
 						<table class="data-table table stripe hover nowrap">

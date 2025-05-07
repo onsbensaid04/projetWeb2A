@@ -1,23 +1,69 @@
 <?php
-require_once("../../Model/video.php");
-require_once "../../Controller/videoC.php";
-require_once "../../Controller/pdfC.php"; // Assure-toi que ce fichier existe
-$pdfC = new PdfC();
-$pdfs = $pdfC->afficherPdfs(); // Une fonction qui retourne tous les PDFs sous forme de tableau
+require_once '../../config.php';
+require_once '../../Model/Test.php';
+require_once '../../Controller/TestC.php';
+require_once "../../Controller/pdfC.php";
+$errors = [];
+$test_name = $questionT1 = $reponseT1 = $reponse_correcteT1 = "";
+$questionT2 = $repT2 = $rep_correcteT2 = "";
+$questionT3 = $reponT3 = $repon_correcteT3 = "";
+$idTest = null;$id_pdf=null;
+// Récupération des ID PDF pour le select
+$pdfController = new pdfC();
+$pdfs = $pdfController->afficherPdfs(); 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Nettoyage des champs
+    $test_name = trim($_POST['test_name']);
+    $questionT1 = trim($_POST['questionT1']);
+    $reponseT1 = trim($_POST['reponseT1']);
+    $reponse_correcteT1 = trim($_POST['reponse_correcteT1']);
 
+    $questionT2 = trim($_POST['questionT2']);
+    $repT2 = trim($_POST['repT2']);
+    $rep_correcteT2 = trim($_POST['rep_correcteT2']);
 
-// Vérifier si l'id de la vidéo est présent
-if (!isset($_GET['id_video'])) {
-    echo " Aucun identifiant de vidéo fourni.";
-    exit;
-}
+    $questionT3 = trim($_POST['questionT3']);
+    $reponT3 = trim($_POST['reponT3']);
+    $repon_correcteT3 = trim($_POST['repon_correcteT3']);
+	$id_pdf = trim($_POST['id_pdf']);
 
-$videoC = new VideoC();
-$videoData = $videoC->getVideoById($_GET['id_video']);
+    // Contrôles de saisie
+    if (empty($test_name)) $errors['test_name'] = "❌ Le titre du test est requis.";
+    elseif (strlen($test_name) < 3) $errors['test_name_length'] = "❌ Le titre doit contenir au moins 3 caractères.";
 
-if (!$videoData) {
-    echo " Vidéo introuvable.";
-    exit;
+    if (empty($questionT1)) $errors['questionT1'] = "❌ La question 1 est requise.";
+    elseif (strlen($questionT1) < 3) $errors['questionT1_length'] = "❌ La question 1 doit contenir au moins 3 caractères.";
+
+    if (empty($reponseT1)) $errors['reponseT1'] = "❌ La réponse 1 est requise.";
+    if (empty($reponse_correcteT1)) $errors['reponse_correcteT1'] = "❌ La bonne réponse 1 est requise.";
+
+    if (empty($questionT2)) $errors['questionT2'] = "❌ La question 2 est requise.";
+    if (empty($repT2)) $errors['repT2'] = "❌ La réponse 2 est requise.";
+    if (empty($rep_correcteT2)) $errors['rep_correcteT2'] = "❌ La bonne réponse 2 est requise.";
+
+    if (empty($questionT3)) $errors['questionT3'] = "❌ La question 3 est requise.";
+    if (empty($reponT3)) $errors['reponT3'] = "❌ La réponse 3 est requise.";
+    if (empty($repon_correcteT3)) $errors['repon_correcteT3'] = "❌ La bonne réponse 3 est requise.";
+	if (empty($id_pdf)) {
+		$errors['id_pdf'] = "❌ L'ID PDF est requis.";
+	}
+	if (empty($id_pdf) || !is_numeric($id_pdf)) {
+        $errors['id_pdf'] = "❌ Veuillez sélectionner un ID PDF valide.";
+    }
+	
+    // Si pas d'erreurs, ajouter le test
+    if (empty($errors)) {
+        $test = new Test(
+            $test_name, $questionT1, $reponseT1, $reponse_correcteT1,
+            $questionT2, $repT2, $rep_correcteT2,
+            $questionT3, $reponT3, $repon_correcteT3, $idTest,(int)$id_pdf
+        );
+
+        $testController = new TestC();
+        $testController->ajouterTest($test);
+
+        echo "<p style='color:green;'>✅ Le test a été ajouté avec succès !</p>";
+    }
 }
 ?>
 
@@ -124,7 +170,7 @@ if (!$videoData) {
 						<i class="icon-copy dw dw-notification"></i>
 						<span class="badge notification-active"></span>
 					</a>
-					
+				
 				</div>
 			</div>
 			<div class="user-info-dropdown">
@@ -235,22 +281,21 @@ if (!$videoData) {
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<li>
-                            <a href="index.html" class="dropdown-toggle no-arrow">
+                            <a href="index.php" class="dropdown-toggle no-arrow">
                                 <span class="micon dw dw-calendar1"></span><span class="mtext">Home</span>
                             </a>
                         </li>
                         <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle">
-                                <span class="micon dw dw-library"></span><span class="mtext">Cours</span>
-                            </a>
-                            <ul class="submenu">
-                            <li><a href="ajouterVideo.php">Add video</a></li>
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-library"></span><span class="mtext">Cours</span>
+						</a>
+						<ul class="submenu">
+						<li><a href="ajouterVideo.php">Add video</a></li>
                                 <li><a href="afficherVideo.php">Video List</a></li>
                                 <li><a href="ajouter_pdf.php">Add PDF</a></li>
 								<li><a href="Aafficherpdf.php">PDF List</a></li>
-
-                            </ul>
-                        </li>
+						</ul>
+					</li>
 						<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-library"></span><span class="mtext">Exams</span>
@@ -262,6 +307,7 @@ if (!$videoData) {
 						<li><a href="afficherTest.php">Test List</a></li>
 						</ul>
 					</li>
+					
 					
 				</ul>
 			</div>
@@ -276,12 +322,12 @@ if (!$videoData) {
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Videos</h4>
+								<h4>TEST</h4>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Add Video</li>
+									<li class="breadcrumb-item active" aria-current="page">Add TEST</li>
 								</ol>
 							</nav>
 						</div>
@@ -292,78 +338,136 @@ if (!$videoData) {
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<div class="pull-left">
-							<h4 class="text-blue h4">Videos</h4>
+							<h4 class="text-blue h4">TEST</h4>
 							<!--<p class="mb-30">All bootstrap element classies</p>-->
 						</div>
 						<div class="pull-right">
 							<a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"  data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
 						</div>
 					</div>
-					<form method="POST" action="updateVideoT.php">
-                    <input type="hidden" name="id_video" value="<?= htmlspecialchars($videoData['id_video']) ?>">
-                    <input type="hidden" name="id_pdf" value="<?= htmlspecialchars($videoData['id_pdf']) ?>">
-
-
-    <!-- Titre -->
-    <div class="form-group">
-        <label>Titre</label>
-        <input class="form-control" type="text" name="titre" value="<?= htmlspecialchars($videoData['titre'] ?? '') ?>">
-        <?php if (isset($errors['titre'])): ?>
-            <small style="color: red;"><?= $errors['titre'] ?></small>
-        <?php endif; ?>
+					
+                    <form method="POST" action="ajouterTest.php" novalidate>
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">Titre</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="test_name" class="form-control" type="text" placeholder="Titre" required>
+			<?php if (isset($errors['test_name'])) echo "<p style='color:red;'>".$errors['test_name']."</p>"; ?>
+<?php if (isset($errors['test_name_length'])) echo "<p style='color:red;'>".$errors['test_name_length']."</p>"; ?>
+        
+		</div>
     </div>
+    <!-- Ajoute d'autres champs ici -->
 
-    <!-- URL -->
-    <div class="form-group">
-        <label>URL</label>
-        <input class="form-control" type="text" name="url" value="<?= htmlspecialchars($videoData['url'] ?? '') ?>">
-        <?php if (isset($errors['url'])): ?>
-            <small style="color: red;"><?= $errors['url'] ?></small>
-        <?php endif; ?>
-    </div>
 
-    <!-- ID PDF -->
-    <!--<div class="form-group">
-    <label>ID PDF</label>
-    <select class="form-control" name="id_pdf">
-        <option value="">-- Sélectionner --</option>
-       
-    </select>
-</div>-->
 
-    <!-- Description -->
-    <div class="form-group">
-        <label>Description</label>
-        <textarea class="form-control" name="description"><?= htmlspecialchars($videoData['description'] ?? '') ?></textarea>
-        <?php if (isset($errors['description'])): ?>
-            <small style="color: red;"><?= $errors['description'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- Durée -->
-    <div class="form-group">
-        <label>Durée (format mm:ss)</label>
-        <input class="form-control" type="duree" name="duree" value="<?= htmlspecialchars($videoData['duree'] ?? '') ?>">
-        <?php if (isset($errors['duree'])): ?>
-            <small style="color: red;"><?= $errors['duree'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- Date -->
-    <div class="form-group">
-        <label>Date</label>
-        <input class="form-control" type="date" name="date_ajout" value="<?= htmlspecialchars($videoData['date_ajout'] ?? '') ?>">
-        <?php if (isset($errors['date_ajout'])): ?>
-            <small style="color: red;"><?= $errors['date_ajout'] ?></small>
-        <?php endif; ?>
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">questionT1</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="questionT1" class="form-control" type="text">
+			<?php if (isset($errors['questionT1'])) echo "<p style='color:red;'>".$errors['questionT1']."</p>"; ?>
+<?php if (isset($errors['questionT1_length'])) echo "<p style='color:red;'>".$errors['questionT1_length']."</p>"; ?>
+        
+		</div>
     </div>
 
     <div class="form-group row">
-        <div class="col-sm-12 col-md-10 offset-md-2">
-            <button type="submit" class="btn btn-success">Modifier Video</button>
-        </div>
+        <label class="col-sm-12 col-md-2 col-form-label">reponseT1</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="reponseT1" class="form-control" type="text">
+			<?php if (isset($errors['reponseT1'])) echo "<p style='color:red;'>".$errors['reponseT1']."</p>"; ?>
+<?php if (isset($errors['reponseT1_length'])) echo "<p style='color:red;'>".$errors['reponseT1_length']."</p>"; ?>
+        
+		</div>
     </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">reponse_correcteT1</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="reponse_correcteT1" class="form-control" type="text">
+			<?php if (isset($errors['reponse_correcteT1'])) echo "<p style='color:red;'>".$errors['reponse_correcteT1']."</p>"; ?>
+<?php if (isset($errors['reponse_correcteT1_length'])) echo "<p style='color:red;'>".$errors['reponse_correcteT1_length']."</p>"; ?>
+        
+		</div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">questionT2</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="questionT2" class="form-control" type="text">
+			<?php if (isset($errors['questionT2'])) echo "<p style='color:red;'>".$errors['questionT2']."</p>"; ?>
+<?php if (isset($errors['questionT2_length'])) echo "<p style='color:red;'>".$errors['questionT2_length']."</p>"; ?>
+        
+		</div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">repT2</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="repT2" class="form-control" type="text">
+			<?php if (isset($errors['repT2'])) echo "<p style='color:red;'>".$errors['repT2']."</p>"; ?>
+<?php if (isset($errors['repT2_length'])) echo "<p style='color:red;'>".$errors['repT2_length']."</p>"; ?>
+        
+		</div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">rep_correcteT2</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="rep_correcteT2" class="form-control" type="text">
+			<?php if (isset($errors['rep_correcteT2'])) echo "<p style='color:red;'>".$errors['rep_correcteT2']."</p>"; ?>
+<?php if (isset($errors['rep_correcteT2_length'])) echo "<p style='color:red;'>".$errors['rep_correcteT2_length']."</p>"; ?>
+        
+		</div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">questionT3</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="questionT3" class="form-control" type="text">
+			<?php if (isset($errors['questionT3'])) echo "<p style='color:red;'>".$errors['questionT3']."</p>"; ?>
+<?php if (isset($errors['questionT3_length'])) echo "<p style='color:red;'>".$errors['questionT3_length']."</p>"; ?>
+        
+		</div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">reponT3</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="reponT3" class="form-control" type="text">
+			<?php if (isset($errors['reponT3'])) echo "<p style='color:red;'>".$errors['reponT3']."</p>"; ?>
+<?php if (isset($errors['reponT3_length'])) echo "<p style='color:red;'>".$errors['reponT3_length']."</p>"; ?>
+        
+		</div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">repon_correcteT3</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="repon_correcteT3" class="form-control" type="text">
+			<?php if (isset($errors['repon_correcteT3'])) echo "<p style='color:red;'>".$errors['repon_correcteT3']."</p>"; ?>
+<?php if (isset($errors['repon_correcteT3_length'])) echo "<p style='color:red;'>".$errors['repon_correcteT3_length']."</p>"; ?>
+        
+		</div>
+		<div class="form-group">
+        <label class="col-sm-12 col-md-2 col-form-label">ID PDF</label>
+            <select class="form-control" name="id_pdf">
+                <option value="">-- Sélectionner --</option>
+                <?php foreach ($pdfs as $pdf): ?>
+                    <option value="<?= $pdf['id_pdf'] ?>" <?= ($id_pdf == $pdf['id_pdf']) ? 'selected' : '' ?>>
+                        <?= $pdf['id_pdf'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <?php if (isset($errors['id_pdf'])): ?>
+                <small style="color: red;"><?= $errors['id_pdf'] ?></small>
+            <?php endif; ?>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
 </form>
+
 
 					<div class="collapse collapse-box" id="basic-form1" >
 						<div class="code-box">
@@ -378,12 +482,6 @@ if (!$videoData) {
 					</div>
 				</div>
 				<!-- Default Basic Forms End -->
-
-
-				
-
-				
-
 			</div>
 			<div class="footer-wrap pd-20 mb-20 card-box">
 				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>

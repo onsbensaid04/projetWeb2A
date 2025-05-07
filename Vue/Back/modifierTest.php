@@ -1,22 +1,17 @@
 <?php
-require_once("../../Model/video.php");
-require_once "../../Controller/videoC.php";
-require_once "../../Controller/pdfC.php"; // Assure-toi que ce fichier existe
-$pdfC = new PdfC();
-$pdfs = $pdfC->afficherPdfs(); // Une fonction qui retourne tous les PDFs sous forme de tableau
+require_once("../../Model/Test.php");
+require_once("../../Controller/TestC.php");
 
-
-// Vérifier si l'id de la vidéo est présent
-if (!isset($_GET['id_video'])) {
-    echo " Aucun identifiant de vidéo fourni.";
+if (!isset($_GET['idTest'])) {
+    echo "Identifiant du test manquant.";
     exit;
 }
 
-$videoC = new VideoC();
-$videoData = $videoC->getVideoById($_GET['id_video']);
+$testC = new TestC();
+$testData = $testC->getTestById($_GET['idTest']);
 
-if (!$videoData) {
-    echo " Vidéo introuvable.";
+if (!$testData) {
+    echo "Test introuvable.";
     exit;
 }
 ?>
@@ -239,7 +234,7 @@ if (!$videoData) {
                                 <span class="micon dw dw-calendar1"></span><span class="mtext">Home</span>
                             </a>
                         </li>
-                        <li class="dropdown">
+						<li class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle">
                                 <span class="micon dw dw-library"></span><span class="mtext">Cours</span>
                             </a>
@@ -263,6 +258,7 @@ if (!$videoData) {
 						</ul>
 					</li>
 					
+					
 				</ul>
 			</div>
 		</div>
@@ -276,12 +272,12 @@ if (!$videoData) {
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Videos</h4>
+								<h4>TEST</h4>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Add Video</li>
+									<li class="breadcrumb-item active" aria-current="page">Add TEST</li>
 								</ol>
 							</nav>
 						</div>
@@ -292,78 +288,92 @@ if (!$videoData) {
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<div class="pull-left">
-							<h4 class="text-blue h4">Videos</h4>
+							<h4 class="text-blue h4">TEST</h4>
 							<!--<p class="mb-30">All bootstrap element classies</p>-->
 						</div>
 						<div class="pull-right">
 							<a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"  data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
 						</div>
 					</div>
-					<form method="POST" action="updateVideoT.php">
-                    <input type="hidden" name="id_video" value="<?= htmlspecialchars($videoData['id_video']) ?>">
-                    <input type="hidden" name="id_pdf" value="<?= htmlspecialchars($videoData['id_pdf']) ?>">
+					
+                    <form method="POST" action="modifierTestT.php">
 
+    <input type="hidden" name="idTest" value="<?= $testData['idTest'] ?>">
 
-    <!-- Titre -->
-    <div class="form-group">
-        <label>Titre</label>
-        <input class="form-control" type="text" name="titre" value="<?= htmlspecialchars($videoData['titre'] ?? '') ?>">
-        <?php if (isset($errors['titre'])): ?>
-            <small style="color: red;"><?= $errors['titre'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- URL -->
-    <div class="form-group">
-        <label>URL</label>
-        <input class="form-control" type="text" name="url" value="<?= htmlspecialchars($videoData['url'] ?? '') ?>">
-        <?php if (isset($errors['url'])): ?>
-            <small style="color: red;"><?= $errors['url'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- ID PDF -->
-    <!--<div class="form-group">
-    <label>ID PDF</label>
-    <select class="form-control" name="id_pdf">
-        <option value="">-- Sélectionner --</option>
-       
-    </select>
-</div>-->
-
-    <!-- Description -->
-    <div class="form-group">
-        <label>Description</label>
-        <textarea class="form-control" name="description"><?= htmlspecialchars($videoData['description'] ?? '') ?></textarea>
-        <?php if (isset($errors['description'])): ?>
-            <small style="color: red;"><?= $errors['description'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- Durée -->
-    <div class="form-group">
-        <label>Durée (format mm:ss)</label>
-        <input class="form-control" type="duree" name="duree" value="<?= htmlspecialchars($videoData['duree'] ?? '') ?>">
-        <?php if (isset($errors['duree'])): ?>
-            <small style="color: red;"><?= $errors['duree'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- Date -->
-    <div class="form-group">
-        <label>Date</label>
-        <input class="form-control" type="date" name="date_ajout" value="<?= htmlspecialchars($videoData['date_ajout'] ?? '') ?>">
-        <?php if (isset($errors['date_ajout'])): ?>
-            <small style="color: red;"><?= $errors['date_ajout'] ?></small>
-        <?php endif; ?>
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">Titre</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="test_name" class="form-control" type="text" value="<?= $testData['test_name'] ?>" required>
+        </div>
     </div>
 
     <div class="form-group row">
-        <div class="col-sm-12 col-md-10 offset-md-2">
-            <button type="submit" class="btn btn-success">Modifier Video</button>
+        <label class="col-sm-12 col-md-2 col-form-label">questionT1</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="questionT1" class="form-control" type="text" value="<?= $testData['questionT1'] ?>">
         </div>
     </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">reponseT1</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="reponseT1" class="form-control" type="text" value="<?= $testData['reponseT1'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">reponse_correcteT1</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="reponse_correcteT1" class="form-control" type="text" value="<?= $testData['reponse_correcteT1'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">questionT2</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="questionT2" class="form-control" type="text" value="<?= $testData['questionT2'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">repT2</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="repT2" class="form-control" type="text" value="<?= $testData['repT2'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">rep_correcteT2</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="rep_correcteT2" class="form-control" type="text" value="<?= $testData['rep_correcteT2'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">questionT3</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="questionT3" class="form-control" type="text" value="<?= $testData['questionT3'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">reponT3</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="reponT3" class="form-control" type="text" value="<?= $testData['reponT3'] ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">repon_correcteT3</label>
+        <div class="col-sm-12 col-md-10">
+            <input name="repon_correcteT3" class="form-control" type="text" value="<?= $testData['repon_correcteT3'] ?>">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-warning">Modifier</button>
 </form>
+
+
 
 					<div class="collapse collapse-box" id="basic-form1" >
 						<div class="code-box">
@@ -372,7 +382,87 @@ if (!$videoData) {
 								<a href="#basic-form1" class="btn btn-primary btn-sm pull-right" rel="content-y"  data-toggle="collapse" role="button"><i class="fa fa-eye-slash"></i> Hide Code</a>
 							</div>
 							<pre><code class="xml copy-pre" id="copy-pre">
-
+<!--<form>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Text</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" type="text" placeholder="Johnny Brown">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Search</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" placeholder="Search Here" type="search">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Email</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" value="bootstrap@example.com" type="email">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">URL</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" value="https://getbootstrap.com" type="url">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Telephone</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" value="1-(111)-111-1111" type="tel">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Password</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" value="password" type="password">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Number</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control" value="100" type="number">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and time</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control datetimepicker" placeholder="Choose Date anf time" type="text">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Date</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control date-picker" placeholder="Select Date" type="text">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Month</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control month-picker" placeholder="Select Month" type="text">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Time</label>
+		<div class="col-sm-12 col-md-10">
+			<input class="form-control time-picker" placeholder="Select time" type="text">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Select</label>
+		<div class="col-sm-12 col-md-10">
+			<select class="custom-select col-12">
+				<option selected="">Choose...</option>
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
+		</div>
+	</div>
+	
+	
+</form>-->
 							</code></pre>
 						</div>
 					</div>

@@ -1,27 +1,17 @@
 <?php
-require_once("../../Model/video.php");
-require_once "../../Controller/videoC.php";
-require_once "../../Controller/pdfC.php"; // Assure-toi que ce fichier existe
-$pdfC = new PdfC();
-$pdfs = $pdfC->afficherPdfs(); // Une fonction qui retourne tous les PDFs sous forme de tableau
+require_once '../../config.php';
+require_once '../../Model/Test.php';
+require_once '../../Controller/TestC.php';
 
+// ✅ Initialiser la connexion
+$db = config::getConnexion();
 
-// Vérifier si l'id de la vidéo est présent
-if (!isset($_GET['id_video'])) {
-    echo " Aucun identifiant de vidéo fourni.";
-    exit;
-}
+// ✅ Créer le contrôleur avec la connexion
+$testController = new TestC($db);
 
-$videoC = new VideoC();
-$videoData = $videoC->getVideoById($_GET['id_video']);
-
-if (!$videoData) {
-    echo " Vidéo introuvable.";
-    exit;
-}
+// ✅ Récupérer les tests
+$tests = $testController->afficherTests();
 ?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,8 +32,9 @@ if (!$videoData) {
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css">
-
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -141,7 +132,7 @@ if (!$videoData) {
 					</div>
 				</div>
 			</div>
-			
+		
 		</div>
 	</div>
 
@@ -223,7 +214,7 @@ if (!$videoData) {
 	<div class="left-side-bar">
 		<div class="brand-logo">
 			<a href="index.html">
-				<img src="vendors/images/logoicon.png" alt="" class="dark-logo">
+				<img src="vendors/images/logo.png" alt="" class="dark-logo">
 				<img src="vendors/images/logo.png" alt="" class="light-logo">
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -235,23 +226,23 @@ if (!$videoData) {
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<li>
-                            <a href="index.html" class="dropdown-toggle no-arrow">
+                            <a href="index.php" class="dropdown-toggle no-arrow">
                                 <span class="micon dw dw-calendar1"></span><span class="mtext">Home</span>
                             </a>
                         </li>
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle">
-                                <span class="micon dw dw-library"></span><span class="mtext">Cours</span>
-                            </a>
-                            <ul class="submenu">
-                            <li><a href="ajouterVideo.php">Add video</a></li>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-library"></span><span class="mtext">Cours</span>
+						</a>
+						<ul class="submenu">
+						<li><a href="ajouterVideo.php">Add video</a></li>
                                 <li><a href="afficherVideo.php">Video List</a></li>
                                 <li><a href="ajouter_pdf.php">Add PDF</a></li>
 								<li><a href="Aafficherpdf.php">PDF List</a></li>
-
-                            </ul>
-                        </li>
-						<li class="dropdown">
+						</ul>
+					</li>
+					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-library"></span><span class="mtext">Exams</span>
 						</a>
@@ -263,6 +254,8 @@ if (!$videoData) {
 						</ul>
 					</li>
 					
+					
+				
 				</ul>
 			</div>
 		</div>
@@ -276,114 +269,83 @@ if (!$videoData) {
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>Videos</h4>
+								<h4>TEST Liste</h4>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Add Video</li>
+									<li class="breadcrumb-item active" aria-current="page">TEST Liste</li>
 								</ol>
 							</nav>
 						</div>
 						
 					</div>
 				</div>
-				<!-- Default Basic Forms Start -->
-				<div class="pd-20 card-box mb-30">
-					<div class="clearfix">
-						<div class="pull-left">
-							<h4 class="text-blue h4">Videos</h4>
-							<!--<p class="mb-30">All bootstrap element classies</p>-->
-						</div>
-						<div class="pull-right">
-							<a href="#basic-form1" class="btn btn-primary btn-sm scroll-click" rel="content-y"  data-toggle="collapse" role="button"><i class="fa fa-code"></i> Source Code</a>
-						</div>
+				<!-- Simple Datatable start -->
+				<div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">Liste</h4>
 					</div>
-					<form method="POST" action="updateVideoT.php">
-                    <input type="hidden" name="id_video" value="<?= htmlspecialchars($videoData['id_video']) ?>">
-                    <input type="hidden" name="id_pdf" value="<?= htmlspecialchars($videoData['id_pdf']) ?>">
+					<div class="pb-20">
+						
+<table class="data-table table stripe hover nowrap">
+    <thead>
+        <tr>
+            <th class="table-plus datatable-nosort">Titre</th>
+            <th>id</th>
+            
+            <th>question1</th>
+            <th>reponse1</th>
+            <th>correct_option1</th>
+            <th>question2</th>
+            <th>reponse2</th>
+            <th>correct_option2</th>
+            <th>question3</th>
+            <th>reponse3</th>
+            <th>correct_option3</th>
+            
+            <th class="datatable-nosort">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($tests as $test): ?>
+            <tr>
+                <td class="table-plus"><?php echo htmlspecialchars($test['test_name']); ?></td>
+                <td><?php echo htmlspecialchars($test['idTest']); ?></td>
+               
+                <td><?php echo htmlspecialchars($test['questionT1']); ?></td>
+                <td><?php echo htmlspecialchars($test['reponseT1']); ?></td>
+                <td><?php echo htmlspecialchars($test['reponse_correcteT1']); ?></td>
+                <td><?php echo htmlspecialchars($test['questionT2']); ?></td>
+                <td><?php echo htmlspecialchars($test['repT2']); ?></td>
+                <td><?php echo htmlspecialchars($test['rep_correcteT2']); ?></td>
+                <td><?php echo htmlspecialchars($test['questionT3']); ?></td>
+                <td><?php echo htmlspecialchars($test['reponT3']); ?></td>
+                <td><?php echo htmlspecialchars($test['repon_correcteT3']); ?></td>
+              
+                <td>
+                    <div class="dropdown">
+                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                            <i class="dw dw-more"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                         
+                            <a class="dropdown-item" href="modifierTest.php?idTest=<?php echo $test['idTest']; ?>"><i class="dw dw-edit2"></i> Edit</a>
+                            <a class="dropdown-item" href="deleteTest.php?idTest=<?php echo $test['idTest']; ?>"><i class="dw dw-delete-3"></i> Delete</a>
 
-
-    <!-- Titre -->
-    <div class="form-group">
-        <label>Titre</label>
-        <input class="form-control" type="text" name="titre" value="<?= htmlspecialchars($videoData['titre'] ?? '') ?>">
-        <?php if (isset($errors['titre'])): ?>
-            <small style="color: red;"><?= $errors['titre'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- URL -->
-    <div class="form-group">
-        <label>URL</label>
-        <input class="form-control" type="text" name="url" value="<?= htmlspecialchars($videoData['url'] ?? '') ?>">
-        <?php if (isset($errors['url'])): ?>
-            <small style="color: red;"><?= $errors['url'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- ID PDF -->
-    <!--<div class="form-group">
-    <label>ID PDF</label>
-    <select class="form-control" name="id_pdf">
-        <option value="">-- Sélectionner --</option>
-       
-    </select>
-</div>-->
-
-    <!-- Description -->
-    <div class="form-group">
-        <label>Description</label>
-        <textarea class="form-control" name="description"><?= htmlspecialchars($videoData['description'] ?? '') ?></textarea>
-        <?php if (isset($errors['description'])): ?>
-            <small style="color: red;"><?= $errors['description'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- Durée -->
-    <div class="form-group">
-        <label>Durée (format mm:ss)</label>
-        <input class="form-control" type="duree" name="duree" value="<?= htmlspecialchars($videoData['duree'] ?? '') ?>">
-        <?php if (isset($errors['duree'])): ?>
-            <small style="color: red;"><?= $errors['duree'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <!-- Date -->
-    <div class="form-group">
-        <label>Date</label>
-        <input class="form-control" type="date" name="date_ajout" value="<?= htmlspecialchars($videoData['date_ajout'] ?? '') ?>">
-        <?php if (isset($errors['date_ajout'])): ?>
-            <small style="color: red;"><?= $errors['date_ajout'] ?></small>
-        <?php endif; ?>
-    </div>
-
-    <div class="form-group row">
-        <div class="col-sm-12 col-md-10 offset-md-2">
-            <button type="submit" class="btn btn-success">Modifier Video</button>
-        </div>
-    </div>
-</form>
-
-					<div class="collapse collapse-box" id="basic-form1" >
-						<div class="code-box">
-							<div class="clearfix">
-								<a href="javascript:;" class="btn btn-primary btn-sm code-copy pull-left"  data-clipboard-target="#copy-pre"><i class="fa fa-clipboard"></i> Copy Code</a>
-								<a href="#basic-form1" class="btn btn-primary btn-sm pull-right" rel="content-y"  data-toggle="collapse" role="button"><i class="fa fa-eye-slash"></i> Hide Code</a>
-							</div>
-							<pre><code class="xml copy-pre" id="copy-pre">
-
-							</code></pre>
 						</div>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 					</div>
 				</div>
-				<!-- Default Basic Forms End -->
-
-
+				<!-- Simple Datatable End -->
 				
-
-				
-
+			
 			</div>
 			<div class="footer-wrap pd-20 mb-20 card-box">
 				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
@@ -395,5 +357,20 @@ if (!$videoData) {
 	<script src="vendors/scripts/script.min.js"></script>
 	<script src="vendors/scripts/process.js"></script>
 	<script src="vendors/scripts/layout-settings.js"></script>
-</body>
-</html>
+	<script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+	<script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+	<!-- buttons for Export datatable -->
+	<script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.print.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
+	<script src="src/plugins/datatables/js/pdfmake.min.js"></script>
+	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
+	<!-- Datatable Setting js -->
+	<script src="vendors/scripts/datatable-setting.js"></script></body>
+</html>	
+
+
