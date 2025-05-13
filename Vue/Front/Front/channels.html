@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/templatemo-training-studio.css">
+    <link rel="stylesheet" href="css/channels.css">
+</head>
+
+<body>
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <a href="/integration/Vue/Front/Vue/index.html" class="logo">
+                        <img src="img/logo.png" alt="Logo" style="vertical-align: middle; height: 40px;"> Startup<em> Academy</em>
+                    </a>
+
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/integration/Vue/Front/Vue/index.html" class="active">Home</a></li>
+                        <li class="scroll-to-section"><a href="/integration/Vue/Front/Vue/index.html#[object%20Object]">About</a></li>
+
+
+                        <li class="has-sub"><a href="/integration/Vue/Front/Vue/pdf.php">Cours</a>
+                            <ul class="sub-menu">
+                                <li><a href="video.html">Videos</a></li>
+                                <li><a href="pdf.html">PDF</a></li>
+                            </ul>
+                        </li>
+
+                            <ul class="sub-menu">
+
+                            </ul>
+                        </li>
+
+                        <li class="scroll-to-section"><a href="/integration/Vue/Front/Vue/pdf.php#contact-us">Contact</a></li>
+                    </ul>
+                    <a class='menu-trigger'><span>Menu</span></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="main-container">
+
+    <div class="sidebar" id="channelSidebar">
+
+    </div>
+
+
+    <div class="chat-window">
+        <div class="chat-header">
+            <h4 id="channelTitle"># general</h4>
+            <div class="anonymous-toggle-container">
+                <span class="anonymous-label">Anonymous</span>
+                <label class="anonymous-switch">
+                    <input type="checkbox" id="anonymousToggle">
+                    <span class="anonymous-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+
+        </div>
+        <div class="chat-input" >
+            <input type="text" placeholder="Message #general" id="messageInput" />
+            <button id="sendMessageButton" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/channels.js"></script>
+</body>
+</html>

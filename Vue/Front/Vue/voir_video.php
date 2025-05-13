@@ -4,12 +4,12 @@ require_once(__DIR__ . "/../../../config.php");
 session_start();
 
 // Vérifie si l'utilisateur est connecté
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['user']['id'])) {
     echo "Utilisateur non connecté.";
     exit;
 }
 
-$id_utilisateur = $_SESSION['id_utilisateur'];  // Utilisateur connecté
+$id_utilisateur = $_SESSION['user']['id'];  // Utilisateur connecté
 
 if (!isset($_GET['id_video'])) {
     echo "Aucune vidéo sélectionnée.";
@@ -97,30 +97,44 @@ https://templatemo.com/tm-548-training-studio
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section">
-                                <a href="index.html" class="active" style="color: rgba(0,123,255,.25) ;">Home</a>
-                            </li>
-                            <li class="scroll-to-section">
-                                <a href="classes.html" style="color: rgba(0,123,255,.25);">Classes</a>
-                            </li>
-                            <li class="scroll-to-section">
-                                <a href="schedules.html" style="color: rgba(0,123,255,.25);">Schedules</a>
-                            </li>
-                            <li class="has-sub">
-                                <a href="javascript:void(0)">Cours</a>
-                                <ul class="sub-menu">
-                                    <li><a href="pdf.php">Videos</a></li>
-                                    <li><a href="pdf.php">PDF</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="Test.html">Test</a></li>
+                            <li class="scroll-to-section"><a href="/Vue/Front/Vue/index.php" class="active">Home</a></li>
 
+                          
+                            <li class="scroll-to-section">
+                                <a href="pdf.php" style="color: rgba(0,123,255,.25);">Cours</a>
+                            </li>
+
+                           <li class="scroll-to-section"><a href="/integration/Vue/Front/Front/channels.html">Forum</a></li>
                             <li class="scroll-to-section">
                                 <a href="#contact-us" style="color: rgba(0,123,255,.25);">Contact</a>
                             </li>
-                            <li class="main-button">
-                                <a href="#" >Sign Up</a>
-                            </li>
+                             <?php if (!isset($_SESSION['user'])): ?>
+                                <li class="main-button"><a href="./connexion.php">Sign In</a></li>
+                            <?php else: ?>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="display: flex; align-items: center;">
+                                        <i class="fa fa-user-circle" style="font-size: 1.5em; margin-right: 5px;"></i>
+                                        <?php echo htmlspecialchars($_SESSION['user']['prenom']); ?>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                        <span
+                                            class="dropdown-item-text"><strong><?php echo htmlspecialchars($_SESSION['user']['prenom'] . ' ' . $_SESSION['user']['nom']); ?></strong></span>
+                                        <span class="dropdown-item-text">Role:
+                                            <?php echo htmlspecialchars($_SESSION['user']['role']); ?></span>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="mon_profil.php"><i
+                                                    class="fa fa-user" style="margin-right: 5px;"></i>Mon Profil</a>
+                                        <?php if ($_SESSION['user']['role'] === 'admin'): ?>
+                                            <a class="dropdown-item" href="./../../Back/dashboard.php"><i
+                                                    class="fa fa-tachometer" style="margin-right: 5px;"></i>Dashboard</a>
+                                        <?php endif; ?>
+                                        <a class="dropdown-item" href="./logout.php"><i
+                                                class="fa fa-sign-out" style="margin-right: 5px;"></i>Logout</a>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                                 
                         <a class='menu-trigger'>
@@ -151,10 +165,10 @@ https://templatemo.com/tm-548-training-studio
         <?php endif; ?>
 
         <p><strong>Description :</strong> <?= htmlspecialchars($video['description']) ?></p>
-        <p><strong>Durée :</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
-        <p><strong>Date_ajout :</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
+        <p><strong>Duration :</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
+        <p><strong>Date_added :</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
 
-        <h5 class="mt-5">Donnez votre avis :</h5>
+        <h5 class="mt-5">Give your feedback ou Provide your feedback :</h5>
         <!-- Affichage des anciens commentaires de l'utilisateur -->
 <!-- Affichage des anciens commentaires de l'utilisateur -->
 <!-- Formulaire de note et commentaire -->
@@ -163,7 +177,7 @@ https://templatemo.com/tm-548-training-studio
 
     <!-- 1. Saisie des étoiles -->
     <div class="mb-3">
-        <label class="form-label">Votre note :</label><br>
+        <label class="form-label">Your grade:</label><br>
         <div class="star-rating">
             <?php for ($i = 5; $i >= 1; $i--): ?>
                 <input type="radio" id="star<?= $i ?>" name="note" value="<?= $i ?>" <?= ($i == $lastNote) ? 'checked' : '' ?>>
@@ -183,7 +197,7 @@ https://templatemo.com/tm-548-training-studio
     ?>
 
     <?php if ($commentaires): ?>
-        <h4 class="mb-3">Vos commentaires précédents</h4>
+        <h4 class="mb-3">Your previous comments </h4>
         <div class="list-group mb-4">
             <?php foreach ($commentaires as $com): ?>
                 <div class="list-group-item p-4 rounded shadow-sm mb-3">
@@ -199,7 +213,7 @@ https://templatemo.com/tm-548-training-studio
                         <?php if (!empty($com['commentaire'])): ?>
                             <p class="mb-0"><?= nl2br(htmlspecialchars($com['commentaire'])) ?></p>
                         <?php else: ?>
-                            <p class="text-muted fst-italic mb-0">Aucun commentaire ajouté.</p>
+                            <p class="text-muted fst-italic mb-0">No comment added. </p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -209,11 +223,12 @@ https://templatemo.com/tm-548-training-studio
 
     <!-- 3. Saisie du commentaire (après les anciens commentaires) -->
     <div class="mb-3">
-        <label for="commentaire" class="form-label">Ajouter un commentaire (optionnel)</label>
+        <label for="commentaire" class="form-label">Add a comment (optional)"</label>
         <textarea class="form-control" name="commentaire" rows="3"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" class="btn btn-primary">Submit
+    </button>
 </form>
 
 
@@ -223,7 +238,7 @@ https://templatemo.com/tm-548-training-studio
 
 
 
-        <a href="pdf.php" class="btn btn-secondary mt-3">← Retour</a>
+        <a href="pdf.php" class="btn btn-secondary mt-3">← Back</a>
     </div>
 </body>
 <footer>

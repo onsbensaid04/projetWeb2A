@@ -1,17 +1,17 @@
 <?php
 require_once "../../../controller/pdfC.php";
 require_once "../../../Controller/categoryC.php";
+require_once "../../../controller/TestC.php";
 
 session_start();
 
 
-$_SESSION['id']=1;  // Utilisateur connecté
 
 
 $categoryController = new CategoryC();
 $pdfC = new PdfC();
 
-
+$testC = new TestC();
 
 
 $pdfs = $pdfC->afficherPdfs(); // Tous les PDFs par défaut
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search']) && !empty($_
 ?>
 <?php
 // Récupérer l'ID de l'utilisateur depuis la session
-$userId = $_SESSION['id'];  // Assurez-vous que l'utilisateur est bien connecté
+$userId = $_SESSION['user']['id'];  // Assurez-vous que l'utilisateur est bien connecté
 $pdo = config::getConnexion(); // Connexion à la base
 
 // Requête SQL pour récupérer la progression de l'utilisateur pour chaque PDF
@@ -94,29 +94,45 @@ https://templatemo.com/tm-548-training-studio
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li class="scroll-to-section">
-                                <a href="index.html" class="active" style="color: rgba(0,123,255,.25) ;">Home</a>
-                            </li>
+                            <li class="scroll-to-section"><a href="/Vue/Front/Vue/index.php" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="offre_emploi.php">Offres d'Emploi</a></li>
+
                             <li class="scroll-to-section">
-                                <a href="classes.html" style="color: rgba(0,123,255,.25);">Classes</a>
+                                <a href="pdf.php" style="color: rgba(0,123,255,.25);">Cours</a>
                             </li>
-                            <li class="scroll-to-section">
-                                <a href="schedules.html" style="color: rgba(0,123,255,.25);">Schedules</a>
-                            </li>
-                            <li class="has-sub">
-                                <a href="javascript:void(0)">Cours</a>
-                                <ul class="sub-menu">
-                                    <li><a href="pdf.php">Videos</a></li>
-                                    <li><a href="pdf.php">PDF</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="Test.html">Test</a></li>
+                            <li class="scroll-to-section"><a href="/integration/Vue/Front/Front/channels.html">Forum</a></li>
+                           
 
                             <li class="scroll-to-section">
                                 <a href="#contact-us" style="color: rgba(0,123,255,.25);">Contact</a>
                             </li>
-                            <li class="main-button">
-                                <a href="#" >Sign Up</a>
-                            </li>
+                            <?php if (!isset($_SESSION['user'])): ?>
+                                <li class="main-button"><a href="./connexion.php">Sign In</a></li>
+                            <?php else: ?>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="display: flex; align-items: center;">
+                                        <i class="fa fa-user-circle" style="font-size: 1.5em; margin-right: 5px;"></i>
+                                        <?php echo htmlspecialchars($_SESSION['user']['prenom']); ?>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                        <span
+                                            class="dropdown-item-text"><strong><?php echo htmlspecialchars($_SESSION['user']['prenom'] . ' ' . $_SESSION['user']['nom']); ?></strong></span>
+                                        <span class="dropdown-item-text">Role:
+                                            <?php echo htmlspecialchars($_SESSION['user']['role']); ?></span>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="mon_profil.php"><i
+                                                    class="fa fa-user" style="margin-right: 5px;"></i>Mon Profil</a>
+                                        <?php if ($_SESSION['user']['role'] === 'admin'): ?>
+                                            <a class="dropdown-item" href="./../../Back/dashboard.php"><i
+                                                    class="fa fa-tachometer" style="margin-right: 5px;"></i>Dashboard</a>
+                                        <?php endif; ?>
+                                        <a class="dropdown-item" href="./logout.php"><i
+                                                class="fa fa-sign-out" style="margin-right: 5px;"></i>Logout</a>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                                 
                         <a class='menu-trigger'>
@@ -146,7 +162,7 @@ https://templatemo.com/tm-548-training-studio
         <!-- Barre de recherche par titre -->
 <!-- 🔍 Barre de recherche fixe -->
 <div class="search-title-bar">
-    <input type="text" id="searchInput" placeholder="📝 Rechercher un cours...">
+    <input type="text" id="searchInput" placeholder="📝 Search for a course...">
 </div>
 
 
@@ -155,9 +171,9 @@ https://templatemo.com/tm-548-training-studio
 </section>
 <div class="search-form-container">
     <form method="POST" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <label for="categorySelect" style="margin: 0; font-weight: 500;">🔎 Catégorie :</label>
+        <label for="categorySelect" style="margin: 0; font-weight: 500;">🔎 Category :</label>
         <select name="id_category" id="categorySelect" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <option value="">-- Choisir --</option>
+            <option value="">-- Choose --</option>
             <?php foreach ($categories as $cat): ?>
                 <option value="<?= $cat['id_category'] ?>" 
                     <?= (isset($_POST['id_category']) && $_POST['id_category'] == $cat['id_category']) ? 'selected' : '' ?>>
@@ -165,7 +181,7 @@ https://templatemo.com/tm-548-training-studio
                 </option>
             <?php endforeach; ?>
         </select>
-        <input type="submit" value="Rechercher" name="search" style="padding: 5px 15px; background-color: #cc5500; border: none; border-radius: 5px; color: white; cursor: pointer;">
+        <input type="submit" value="Search" name="search" style="padding: 5px 15px; background-color: #cc5500; border: none; border-radius: 5px; color: white; cursor: pointer;">
     </form>
 </div>
 
@@ -184,6 +200,7 @@ https://templatemo.com/tm-548-training-studio
                     break;
                 }
             }
+            $hasTest = $testC->hasTestForPdf($pdf['id_pdf']); // $testC doit être initialisé
             ?>
             <div class="col-lg-4 pdf-item">
                 <div class="trainer-item">
@@ -203,7 +220,10 @@ https://templatemo.com/tm-548-training-studio
                             <p>Pas encore commencé</p>
                         <?php endif; ?>
 
-                        <a href="voirPdf.php?id_pdf=<?= htmlspecialchars($pdf['id_pdf']) ?>&url=<?= urlencode($pdf['url']) ?>" class="btn btn-warning btn-orange-dark mt-3">Voir le PDF</a>
+                        <a href="voirPdf.php?id_pdf=<?= htmlspecialchars($pdf['id_pdf']) ?>&url=<?= urlencode($pdf['url']) ?>" class="btn btn-warning btn-orange-dark mt-3">Open the PDF</a>
+                        <?php if ($hasTest): ?>
+                    <a href="Test.php?id_pdf=<?= htmlspecialchars($pdf['id_pdf']) ?>" class="btn btn-warning btn-orange-dark mt-3">Access the test</a>
+                <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -295,6 +315,8 @@ document.getElementById('searchInput').addEventListener('input', function () {
         }
     });
 });
+        var userId = <?php echo json_encode($userId); ?>;
+        console.log("ID de l'utilisateur connecté: ", userId);
 </script>
 
 </body>

@@ -1,0 +1,582 @@
+/* Global Styles */
+html {
+    background-color: rgba(35, 45, 57, 0.8) !important;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 70px; /* Adjust to position below header */
+    left: 20px;
+    width: 80px;
+    padding: 20px 10px;
+    background-color: transparent;
+    border: 2px solid #aaa;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 100; /* Ensure sidebar is above other content */
+    margin-top: 80px; /* Adjust for better positioning */
+}
+
+.sidebar .channel-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.sidebar .channel-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.sidebar .channel-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Tooltip Styling */
+.sidebar .channel-icon::after {
+    content: attr(data-name);
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #2c2c5c;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.sidebar .channel-icon:hover::after {
+    opacity: 1;
+}
+
+/* Sidebar Menu for Extra Links */
+#sidebar {
+    width: 250px; /* Adjust as needed */
+    background-color: #444;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar li {
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+#sidebar li:hover {
+    background-color: #555; /* Hover effect */
+}
+
+/* Main Content and Chat Window */
+.main-container {
+    margin-top: 80px;
+    display: flex;
+    background-color: rgba(01, 0, 0, 0.5); /* Change for testing */
+}
+
+/* Chat Window Styles */
+.chat-window {
+    background-color: rgba(35, 45, 57, 0.8); /* Keep existing color */
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    margin-left: 105px; /* Ensure enough margin from sidebar */
+    margin-top: 75px;
+    width: 93%;
+    height: calc(100vh - 170px); /* Dynamic height to fit screen */
+    overflow-y: auto; /* Scrollable content */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.chat-header {
+    padding: 15px;
+    background-color: #23272a;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.username {
+    font-weight: bold;
+    color: #7289da;
+    margin-right: 8px;
+}
+
+.text {
+    color: #dddddd;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #2c2f33;
+    border-top: 1px solid #444;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #40444b;
+    color: white;
+    margin-right: 10px;
+}
+
+.chat-input input:focus {
+    outline: none;
+}
+
+.chat-input button {
+    background-color: #7289da;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #5b6eae;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        top: 0;
+        width: 60px; /* Adjust for mobile */
+    }
+
+    .chat-window {
+        margin-left: 0; /* Ensure chat window fills screen width */
+        width: 100%;
+    }
+
+    #sidebar {
+        width: 100%;
+        height: auto; /* Allow sidebar to scroll on smaller screens */
+        margin-bottom: 20px;
+    }
+}
+.header-area {
+    background-color: #23272a; /* Dark background for header */
+    padding: 15px 0; /* Reduced padding to make room */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow to header */
+    display: flex;
+    justify-content: space-between; /* Align logo and menu on opposite sides */
+    align-items: center;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    vertical-align: middle;
+    height: 40px;
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+    margin-left: auto; /* Push the menu to the right */
+}
+
+.nav li {
+    padding: 10px 15px; /* Added some padding to the list items */
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav a:hover {
+    background-color: #5b6eae; /* Slightly lighter blue on hover */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Mobile responsiveness: Ensure logo and menu are on the same line */
+@media screen and (max-width: 768px) {
+    .header-area {
+        flex-direction: column; /* Stack the header items vertically */
+        padding: 20px 10px;
+    }
+
+    .nav {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .nav li {
+        padding: 10px 0;
+    }
+}
+/* Header Styling */
+.header-area {
+    background-color: #23272a; /* Dark background for header */
+    padding: 15px 0; /* Padding for the header */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow to header */
+    display: flex;
+    justify-content: space-between; /* Space between logo and nav */
+    align-items: center; /* Align items vertically centered */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    width: 100%;
+}
+
+/* Navigation Menu */
+.main-nav {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    vertical-align: middle;
+    height: 40px;
+    margin-right: 10px; /* Small gap between logo and menu */
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+    margin-left: auto; /* Push the menu to the right */
+    padding: 0;
+}
+
+.nav li {
+    padding: 10px 15px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: block; /* Make sure the link is a block for proper padding */
+}
+
+.nav a:hover {
+    background-color: #5b6eae; /* Slightly lighter blue on hover */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .header-area {
+        flex-direction: column; /* Stack items vertically on small screens */
+        padding: 20px 10px;
+    }
+
+    .nav {
+        flex-direction: column;
+        margin-top: 10px;
+        width: 100%;
+        text-align: center; /* Center-align the menu on mobile */
+    }
+
+    .nav li {
+        padding: 10px 0;
+    }
+
+    .logo {
+        justify-content: center; /* Center logo on mobile */
+        margin-bottom: 10px;
+    }
+}
+
+
+
+.create-channel-button {
+    position: fixed;
+    right: 30px;
+    top: 100px; /* Adjust this value to move it lower or higher */
+    z-index: 1000;
+}
+
+.create-channel-button img {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.create-channel-button img:hover {
+    transform: scale(1.1);
+}
+
+
+.modify-channel-link {
+    display: block;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.modify-channel-image {
+    right: 500px;
+    width: 100px; /* Adjust the size as needed */
+    height: auto;
+    display: inline-block;
+}
+
+/* Active channel styling */
+.channel-icon.active img {
+    border: 2px solid #7289da;
+    box-shadow: 0 0 5px #7289da;
+}
+
+/* Message Styling */
+.chat-messages {
+    height: calc(100% - 110px);
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    max-width: 80%;
+    align-self: flex-start;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.8em;
+}
+
+.username {
+    font-weight: bold;
+    color: #7289da;
+}
+
+.timestamp {
+    color: #999;
+}
+
+.message-content {
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Current user's messages appear on the right */
+.message[data-user="current"] {
+    align-self: flex-end;
+    background-color: #dcf8c6;
+}
+
+/* Chat input styling */
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+    outline: none;
+}
+
+.chat-input input:focus {
+    border-color: #7289da;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    background-color: #7289da;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #5b73c7;
+}
+
+
+/*new*/
+/* Anonymous Mode Toggle Styles */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.anonymous-toggle-container {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.anonymous-label {
+    margin-right: 8px;
+    font-size: 14px;
+    color: #777;
+}
+
+.anonymous-switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+}
+
+.anonymous-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.anonymous-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.anonymous-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .anonymous-slider {
+    background-color: #2196F3;
+}
+
+input:focus + .anonymous-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .anonymous-slider:before {
+    transform: translateX(22px);
+}
+
+/* Anonymous Mode Active Styles */
+body.anonymous-mode .chat-window {
+    background-color: #2a2a2a;
+    color: #f1f1f1;
+}
+
+body.anonymous-mode .chat-header {
+    background-color: #333;
+    border-bottom: 1px solid #444;
+}
+
+body.anonymous-mode .chat-messages {
+    background-color: #2a2a2a;
+}
+
+body.anonymous-mode .message-bubble {
+    background-color: #444;
+    color: #f1f1f1;
+}
+
+body.anonymous-mode .chat-input {
+    background-color: #333;
+    border-top: 1px solid #444;
+}
+
+body.anonymous-mode .chat-input input {
+    background-color: #444;
+    color: #f1f1f1;
+    border: 1px solid #555;
+}
+
+body.anonymous-mode .chat-input button {
+    background-color: #2196F3;
+    color: white;
+}
+
+body.anonymous-mode .anonymous-label {
+    color: #f1f1f1;
+}
+
+/* Anonymous Message Style */
+.anonymous-message .username::after {
+    content: " (Anonymous)";
+    color: #888;
+    font-style: italic;
+}
+
+body.anonymous-mode .anonymous-message .username {
+    color: #AAA;
+    font-style: italic;
+}

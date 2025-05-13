@@ -1,0 +1,194 @@
+/* --- Reset général pour tous les navigateurs --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Body général --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Container du formulaire --- */
+.form-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Titre du formulaire --- */
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #333;
+}
+
+/* --- Groupes de champs --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* --- Input et Select --- */
+input, select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    background: #fff;
+}
+
+/* --- Bouton --- */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff6600;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e65c00;
+}
+
+/* --- Messages d'erreurs sous les inputs --- */
+.error-message {
+    color: #e63946;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* --- Lien vers connexion --- */
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* --- Responsive pour mobile --- */
+@media (max-width: 500px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.error-global {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.error-global2 {
+    color: #e63946;
+    background-color: #ffe6e6;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e63946;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/* --------- captcha --------- */
+.error-global {
+    background-color: #ffe6e6;
+    color: #b30000;
+    padding: 12px 18px;
+    border: 1px solid #ffb3b3;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+
+/* --------- Mdp oublie --------- */
+
+.success-global {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.error-global {
+    background-color: #f8d7da;
+    color: #721c24;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* --------- Mdp oublie (reset_password.php--------- */
+
+
+.form-container {
+    width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #f57c00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.error-global {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}

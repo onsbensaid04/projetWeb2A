@@ -130,54 +130,7 @@ try {
 						<i class="icon-copy dw dw-notification"></i>
 						<span class="badge notification-active"></span>
 					</a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<div class="notification-list mx-h-350 customscroll">
-							<ul>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3>John Doe</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo1.jpg" alt="">
-										<h3>Lea R. Frith</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo2.jpg" alt="">
-										<h3>Erik L. Richards</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo3.jpg" alt="">
-										<h3>John Doe</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo4.jpg" alt="">
-										<h3>Renee I. Hansen</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3>Vicki M. Coleman</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			<div class="user-info-dropdown">
@@ -194,9 +147,7 @@ try {
 					</div>
 				</div>
 			</div>
-			<div class="github-link">
-				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg" alt=""></a>
-			</div>
+			
 		</div>
 	</div>
 
@@ -306,10 +257,27 @@ try {
 								<li><a href="Aafficherpdf.php">PDF List</a></li>
 						</ul>
 					</li>
-					
-					
-					
-				
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-library"></span><span class="mtext">Exams</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="ajouterQuiz.php">addquiz</a></li>
+							<li><a href="afficherQuiz.php">Quiz List</a></li>
+							<li><a href="ajouterTest.php">Add Test</a></li>
+							<li><a href="afficherTest.php">Test List</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="offre_emploi/offre_emploi_list.php" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-list"></span><span class="mtext">Liste des Offres</span>
+						</a>
+					</li>
+					<li>
+						<a href="candidature/candidature_list.php" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-user1"></span><span class="mtext">Liste des Candidatures</span>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>

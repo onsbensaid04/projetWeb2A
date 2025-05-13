@@ -121,63 +121,14 @@ if (!$pdfData) {
 						<i class="icon-copy dw dw-notification"></i>
 						<span class="badge notification-active"></span>
 					</a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<div class="notification-list mx-h-350 customscroll">
-							<ul>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3>John Doe</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo1.jpg" alt="">
-										<h3>Lea R. Frith</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo2.jpg" alt="">
-										<h3>Erik L. Richards</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo3.jpg" alt="">
-										<h3>John Doe</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/photo4.jpg" alt="">
-										<h3>Renee I. Hansen</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3>Vicki M. Coleman</h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			<div class="user-info-dropdown">
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-						<span class="user-icon">
-							<img src="vendors/images/photo1.jpg" alt="">
-						</span>
-						<span class="user-name">Ross C. Lopez</span>
+						
+						<span class="user-name">StartupAcademy</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
@@ -187,9 +138,7 @@ if (!$pdfData) {
 					</div>
 				</div>
 			</div>
-			<div class="github-link">
-				<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg" alt=""></a>
-			</div>
+		
 		</div>
 	</div>
 
@@ -287,6 +236,11 @@ if (!$pdfData) {
                                 <span class="micon dw dw-calendar1"></span><span class="mtext">Home</span>
                             </a>
                         </li>
+						 <li>
+                    <a href="./dashboard.php" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-list"></span><span class="mtext">Liste des Utilisateurs</span>
+                    </a>
+                </li>
                         <li class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle">
                                 <span class="micon dw dw-library"></span><span class="mtext">Cours</span>
@@ -298,13 +252,15 @@ if (!$pdfData) {
 								<li><a href="Aafficherpdf.php">PDF List</a></li>
                             </ul>
                         </li>
-					<li class="dropdown">
+						<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-library"></span><span class="mtext">Tables</span>
+							<span class="micon dw dw-library"></span><span class="mtext">Exams</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="basic-table.html">Basic Tables</a></li>
-							<li><a href="datatable.html">DataTables</a></li>
+							<li><a href="ajouterQuiz.php">addquiz</a></li>
+							<li><a href="afficherQuiz.php">Quiz List</a></li>
+							<li><a href="ajouterTest.php">Add Test</a></li>
+						<li><a href="afficherTest.php">Test List</a></li>
 						</ul>
 					</li>
 					

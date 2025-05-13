@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Channel</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/templatemo-training-studio.css">
+    <link rel="stylesheet" href="css/channels.css">
+    <link rel="stylesheet" href="css/creation_channel.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <a href="/integration/Vue/Front/Vue/index.html" class="logo">
+                        <img src="/integration/uploads/logo.png.png" alt="Logo" style="vertical-align: middle; height: 40px;">
+                        Startup<em> Academy</em>
+                    </a>
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/integration/Vue/Front/Vue/index.html" class="active">Home</a></li>
+                        <li class="scroll-to-section"><a href="/integration/Vue/Front/Vue/index.html#[object%20Object]">About</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+
+                        <li class="has-sub"><a href="/integration/Vue/Front/Vue/pdf.php">Cours</a>
+                            <ul class="sub-menu">
+                                <li><a href="video.html">Videos</a></li>
+                                <li><a href="pdf.html">PDF</a></li>
+                            </ul>
+                        </li>
+
+                            <ul class="sub-menu">
+
+                            </ul>
+                        </li>
+                        
+                        <li class="scroll-to-section"><a href="/integration/Vue/Front/Vue/pdf.php#contact-us">Contact</a></li>
+                    </ul>
+                    <a class="menu-trigger"><span>Menu</span></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Create Channel Form -->
+<div class="container mt-5 create-channel-container">
+    <h2 class="text-center mb-4">Create New Channel</h2>
+    <form id="createChannelForm" action="/integration/Controller/CreateChannelControler.php" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="channel-name">Channel Name</label>
+            <input type="text" class="form-control" id="channel-name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="channel-description">Description</label>
+            <textarea class="form-control" id="channel-description" name="description" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="channel-image">Channel Image</label>
+            <input type="file" class="form-control" id="channel-image" name="image_url" accept="image/*">
+        </div>
+
+        <input type="hidden" name="created_by" value="1"> <!-- This is the default value -->
+
+        <button type="submit" class="btn btn-primary">Create Channel</button>
+    </form>
+
+</div>
+
+<!-- Scripts -->
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

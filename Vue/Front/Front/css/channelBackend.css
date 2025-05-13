@@ -1,0 +1,56 @@
+/* channel-table.css */
+
+.channel-table {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.channel-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.channel-table td.editable {
+    cursor: pointer;
+}
+
+.channel-table td.editable:hover {
+    background-color: #f1f1f1;
+}
+
+.channel-image {
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 5px;
+}
+
+.actions-column {
+    text-align: center;
+    width: 120px;
+}
+
+.btn-actions {
+    margin: 2px;
+}
+
+.container.main-content {
+    padding-top: 100px;
+    min-height: 600px;
+}
+
+.modal-body form .form-group {
+    margin-bottom: 15px;
+}
+
+.create-btn-container {
+    margin-bottom: 20px;
+}
+
+#editImagePreview {
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+#currentImage {
+    max-width: 100px;
+}

@@ -10,7 +10,7 @@ class config
         {
             try {
                 self::$pdo = new PDO(
-                    'mysql:host=localhost;dbname=projet',
+                    'mysql:host=localhost;dbname=projet1',
                     'root',
                     '',
                     [

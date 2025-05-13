@@ -1,0 +1,85 @@
+/* Général */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fb;
+}
+
+/* Conteneur principal */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Carte de profil */
+.profile-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    width: 350px;
+    text-align: center;
+}
+
+/* Image de profil */
+.profile-image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+/* Nom utilisateur */
+.profile-card h2 {
+    margin: 10px 0 5px 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Rôle utilisateur */
+.profile-role {
+    color: #ff6600;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Informations de contact */
+.profile-contact {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.profile-contact p {
+    font-size: 16px;
+    margin: 12px 0;
+    color: #555;
+}
+
+.profile-contact i {
+    margin-right: 10px;
+    color: #ff6600;
+}
+
+/* Bouton de déconnexion */
+.btn-logout {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #333;
+}

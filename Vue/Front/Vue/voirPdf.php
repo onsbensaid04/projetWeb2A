@@ -89,30 +89,45 @@ https://templatemo.com/tm-548-training-studio
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section">
-                                <a href="index.html" class="active" style="color: rgba(0,123,255,.25) ;">Home</a>
-                            </li>
-                            <li class="scroll-to-section">
-                                <a href="classes.html" style="color: rgba(0,123,255,.25);">Classes</a>
-                            </li>
-                            <li class="scroll-to-section">
-                                <a href="schedules.html" style="color: rgba(0,123,255,.25);">Schedules</a>
-                            </li>
-                            <li class="has-sub">
-                                <a href="javascript:void(0)">Cours</a>
-                                <ul class="sub-menu">
-                                    <li><a href="pdf.php">Videos</a></li>
-                                    <li><a href="pdf.php">PDF</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="Test.html">Test</a></li>
+                         
+                                                     <li class="scroll-to-section"><a href="/Vue/Front/Vue/index.php" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="offre_emploi.php">Offres d'Emploi</a></li>
 
                             <li class="scroll-to-section">
-                                <a href="#contact-us" style="color: rgba(0,123,255,.25);">Contact</a>
+                                <a href="pdf.php" style="color: rgba(0,123,255,.25);">Cours</a>
                             </li>
-                            <li class="main-button">
-                                <a href="#" >Sign Up</a>
-                            </li>
+                            <li class="scroll-to-section"><a href="/integration/Vue/Front/Front/channels.html">Forum</a></li>
+                           
+                   
+                        <li class="scroll-to-section"><a href="#contact-us">Contact</a></li>
+                           
+                            <?php if (!isset($_SESSION['user'])): ?>
+                                <li class="main-button"><a href="./connexion.php">Sign In</a></li>
+                            <?php else: ?>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="display: flex; align-items: center;">
+                                        <i class="fa fa-user-circle" style="font-size: 1.5em; margin-right: 5px;"></i>
+                                        <?php echo htmlspecialchars($_SESSION['user']['prenom']); ?>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                        <span
+                                            class="dropdown-item-text"><strong><?php echo htmlspecialchars($_SESSION['user']['prenom'] . ' ' . $_SESSION['user']['nom']); ?></strong></span>
+                                        <span class="dropdown-item-text">Role:
+                                            <?php echo htmlspecialchars($_SESSION['user']['role']); ?></span>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="mon_profil.php"><i
+                                                    class="fa fa-user" style="margin-right: 5px;"></i>Mon Profil</a>
+                                        <?php if ($_SESSION['user']['role'] === 'admin'): ?>
+                                            <a class="dropdown-item" href="./../../Back/dashboard.php"><i
+                                                    class="fa fa-tachometer" style="margin-right: 5px;"></i>Dashboard</a>
+                                        <?php endif; ?>
+                                        <a class="dropdown-item" href="./logout.php"><i
+                                                class="fa fa-sign-out" style="margin-right: 5px;"></i>Logout</a>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                                 
                         <a class='menu-trigger'>
@@ -206,12 +221,12 @@ https://templatemo.com/tm-548-training-studio
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($video['titre']) ?></h5>
                             <p class="card-text"><?= htmlspecialchars($video['description']) ?></p>
-                            <p><strong>Durée:</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
-                            <p><strong>Date ajoutée:</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
+                            <p><strong>Duration:</strong> <?= htmlspecialchars($video['duree']) ?> minutes</p>
+                            <p><strong>Date_added:</strong> <?= htmlspecialchars($video['date_ajout']) ?></p>
 
                             <!-- Bouton pour voir la vidéo -->
                             <a href="voir_video.php?id_video=<?= htmlspecialchars($video['id_video']) ?>" class="btn btn-primary mt-3">
-                                Voir la vidéo
+                            Watch the video
                             </a>
                         </div>
                     </div>
@@ -222,7 +237,7 @@ https://templatemo.com/tm-548-training-studio
         <!-- Bouton retour -->
         <div class="row mt-4">
             <div class="col-lg-12 text-center">
-                <a href="pdf.php" class="btn btn-outline-primary">⬅ Retour à la liste des PDF</a>
+                <a href="pdf.php" class="btn btn-outline-primary">⬅ Back to the PDF list</a>
             </div>
         </div>
     </div>

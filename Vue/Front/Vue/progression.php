@@ -9,8 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         throw new Exception("Données JSON invalides");
     }    
 
-    if (isset($data['id'], $data['id_pdf'], $data['pages_lues'], $data['total_pages'], $data['pourcentage'])) {
-        $userId = $data['id'];
+    // Utilisez l'ID de l'utilisateur directement depuis la session
+    $userId = $_SESSION['user']['id']; // Récupérer l'ID utilisateur de la session
+
+    if (isset($data['id_pdf'], $data['pages_lues'], $data['total_pages'], $data['pourcentage'])) {
         $currentPdfId = $data['id_pdf'];
         $pagesRead = $data['pages_lues'];
         $totalPages = $data['total_pages'];
@@ -22,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Vérifier si une progression existe déjà
             $checkStmt = $pdo->prepare('SELECT COUNT(*) FROM progression_lecture WHERE id = :id AND id_pdf = :id_pdf');
             $checkStmt->execute([
-                ':id' => $userId,
+                ':id' => $userId, // Utilisation de l'ID de la session
                 ':id_pdf' => $currentPdfId
             ]);
             $exists = $checkStmt->fetchColumn();
@@ -41,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':pages_lues' => $pagesRead,
                     ':total_pages' => $totalPages,
                     ':pourcentage' => $progress,
-                    ':id' => $userId,
+                    ':id' => $userId, // Utilisation de l'ID de la session
                     ':id_pdf' => $currentPdfId
                 ]);
             } else {
@@ -51,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES (:id, :id_pdf, :pages_lues, :total_pages, :pourcentage, NOW())
                 ');
                 $insertStmt->execute([
-                    ':id' => $userId,
+                    ':id' => $userId, // Utilisation de l'ID de la session
                     ':id_pdf' => $currentPdfId,
                     ':pages_lues' => $pagesRead,
                     ':total_pages' => $totalPages,

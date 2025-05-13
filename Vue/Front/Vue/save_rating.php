@@ -3,7 +3,7 @@ require_once(__DIR__ . "/../../../config.php");
 
 session_start();
 
-if (!isset($_SESSION['id_utilisateur'])) {
+if (!isset($_SESSION['user']['id'])) {
     // Si l'utilisateur n'est pas connecté, on le redirige vers la page de connexion
     header('Location: login.php');
     exit;
@@ -15,7 +15,7 @@ if (!isset($_POST['note'], $_POST['id_video'])) {
     exit;
 }
 
-$id_utilisateur = $_SESSION['id_utilisateur'];  // Utilisateur connecté
+$id_utilisateur = $_SESSION['user']['id'];  // Utilisateur connecté
 $id_video = (int) $_POST['id_video'];  // ID de la vidéo
 $rating = (int) $_POST['note'];  // Note donnée par l'utilisateur
 $commentaire = $_POST['commentaire'] ?? null;  // Le commentaire de l'utilisateur
